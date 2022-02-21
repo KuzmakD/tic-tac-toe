@@ -1,47 +1,82 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="./style.css">
-   <title>Tic tac toe</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
    <main>
-      <h1>Tic tac toe</h1>
+      <section>
+         <h1 class="game-title">Tic Tac Toe</h1>
 
-      <div class="area-wrapper">
-         <div id="area">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
+         <div class="area-wrapper">
+            <div class="game-container">
+               <div data-cell-index="0" class="cell"></div>
+               <div data-cell-index="1" class="cell"></div>
+               <div data-cell-index="2" class="cell"></div>
+               <div data-cell-index="3" class="cell"></div>
+               <div data-cell-index="4" class="cell"></div>
+               <div data-cell-index="5" class="cell"></div>
+               <div data-cell-index="6" class="cell"></div>
+               <div data-cell-index="7" class="cell"></div>
+               <div data-cell-index="8" class="cell"></div>
+            </div>
          </div>
-      </div>
 
-      <div id="modal-result-wrapper">
-         <div id="overlay"></div>
-         <div id="modal-window">
-            <div id="content">content</div>
-            <div id="btn-close">Start New Game</div>
+         <div class="game-status-wrapper">
+            <div class="game-status"></div>
          </div>
-      </div>
+
+         <button class="btn-game-restart">Restart Game</button>
+
+         <div class="results-container">
+            <table class="results-table">
+               <tbody class="results-tbody">
+                  <tr>
+                     <th class="th_list">X wins</th>
+                     <th class="th_list">Ties</th>
+                     <th class="th_list">O wins</th>
+                  </tr>
+                  <tr>
+                     <td class="td_list" id="X_score"></td>
+                     <td class="td_list" id="tie_score"></td>
+                     <td class="td_list" id="O_score"></td>
+                  </tr>
+               </tbody>
+            </table>
+
+         </div>
+
+     </section>
    </main>
 
-   <footer>
 
+    <footer class="footer">
+      <div class="footer_container">
+         <div class="footer_git">
+            <a href="https://github.com/KuzmakD/" class="footer_git_link" target="_blank">
+               KuzmakD
+            </a>
+         </div>
+
+         <div class="footer_year">2022</div>
+
+         <div class="footer_rss">
+            <a href="https://rs.school/js/" 
+               class="footer_rss_logo" target="_blank">
+               <img src="./img/rss.svg" alt="rss_logo" class="footer_rss_img">
+            </a>
+         </div>
+      </div>
    </footer>
 
-   <script src="./main.js"></script>
+    <script src="./main.js"></script>
 
 </body>
-
-
 </html>
+
