@@ -1,2 +1,1 @@
-# tic-tac-toe
-Game Tic Tac Toe
+https://kuzmakd.github.io/tic-tac-toe/
