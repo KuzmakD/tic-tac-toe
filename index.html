@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-   <main>
-      <section>
+   <main class="main-container">
+
+      <section class="game-section">
          <h1 class="game-title">Tic Tac Toe</h1>
 
          <div class="area-wrapper">
@@ -34,9 +35,14 @@
 
          <button class="btn-game-restart">Restart Game</button>
 
-         <div class="results-container">
-            <table class="results-table">
-               <tbody class="results-tbody">
+     </section>
+
+      <section class="result-section">
+         <h2 class="result-title">Results</h2>
+
+         <div class="result-container">
+            <table class="result-table">
+               <tbody class="result-tbody">
                   <tr>
                      <th class="th_list">X wins</th>
                      <th class="th_list">Ties</th>
@@ -49,10 +55,22 @@
                   </tr>
                </tbody>
             </table>
+         
+         </div>
+
+         <div class="last_result">
+            <h3 class="last-result-title">
+               Last results
+            </h3>
+            <ul class="last-result-list">
+
+            </ul>
 
          </div>
 
-     </section>
+      </section>
+
+
    </main>
 
 
