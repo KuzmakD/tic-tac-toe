@@ -21,6 +21,19 @@ const winningConditions = [
     [0, 3, 6], [1, 4, 7], [2, 5, 8],
     [0, 4, 8], [2, 4, 6]  ];
 
+let clickHandleAudio = new Audio('./audio/bum.mp3');
+let clickFinishAudio = new Audio('./audio/victory2.mp3');
+
+function clickSound() {
+    clickHandleAudio.currentTime = 0;
+    clickFinishAudio.duration = 0.5;
+    clickHandleAudio.play();
+}
+function clickFinishSound() {
+    clickHandleAudio.currentTime = 0;
+    clickFinishAudio.play();
+}
+
 function handleCellPlayed (clickedCell, clickedCellIndex) {
     gameState[clickedCellIndex] = currentPlayer;
     clickedCell.innerHTML = currentPlayer;
@@ -51,7 +64,7 @@ function handleResultValidation() {
         document.getElementById("X_score").innerHTML = score.X_player;
         document.getElementById("tie_score").innerHTML = score.ties;
         document.getElementById("O_score").innerHTML = score.O_player;
-        
+        clickFinishSound();
         result.unshift({ name:currentPlayer, shots:countTurn });
         if (result.length > 10) {
             result.length = 10;
@@ -80,6 +93,7 @@ function handleResultValidation() {
 }
 
 function handleCellClick(clickedCellEvent) {
+    clickSound();
     const clickedCell = clickedCellEvent.target;
     const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
 
@@ -98,6 +112,8 @@ function handleRestartGame() {
     document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
     view_last_Results();
 }
+
+
 
 document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', handleCellClick));
 
@@ -146,3 +162,4 @@ const view_last_Results = () => {
         return mainResult.append(li);
     })
 }
+
