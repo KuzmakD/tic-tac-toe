@@ -8,6 +8,7 @@ let countTurn = 1;
 let gameActive = true;
 let currentPlayer = "X";
 let gameState = ["", "", "", "", "", "", "", "", ""];
+let result = [];
 
 const winningMessage = () => `${currentPlayer} won in ${countTurn} steps!`;
 const drawMessage = () => `FINISH!  TIE!`;
@@ -50,6 +51,13 @@ function handleResultValidation() {
         document.getElementById("X_score").innerHTML = score.X_player;
         document.getElementById("tie_score").innerHTML = score.ties;
         document.getElementById("O_score").innerHTML = score.O_player;
+        
+        result.unshift({ name:currentPlayer, shots:countTurn });
+        if (result.length > 10) {
+            result.length = 10;
+        }
+        setLocalStorage();
+
         return;
     }
 
@@ -58,6 +66,13 @@ function handleResultValidation() {
         statusDisplay.innerHTML = drawMessage();
         score.ties ++;
         document.getElementById("tie_score").innerHTML = score.ties;
+
+        result.unshift({ name: 'Tie', shots: 9 });
+        if (result.length > 10) {
+            result.length = 10;
+        }
+        setLocalStorage();
+
         gameActive = false;
         return;
     }
@@ -65,43 +80,69 @@ function handleResultValidation() {
 }
 
 function handleCellClick(clickedCellEvent) {
-   const clickedCell = clickedCellEvent.target;
-   const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
+    const clickedCell = clickedCellEvent.target;
+    const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
 
-   if (gameState[clickedCellIndex] !== "" || !gameActive) return;
+    if (gameState[clickedCellIndex] !== "" || !gameActive) return;
 
-   handleCellPlayed(clickedCell, clickedCellIndex);
-   handleResultValidation();
+    handleCellPlayed(clickedCell, clickedCellIndex);
+    handleResultValidation();
 }
 
 function handleRestartGame() {
-   gameActive = true;
-   currentPlayer = "X";
-   countTurn = 1;
-   gameState = ["", "", "", "", "", "", "", "", ""];
-   statusDisplay.innerHTML = currentPlayerTurn();
-   document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
+    gameActive = true;
+    currentPlayer = "X";
+    countTurn = 1;
+    gameState = ["", "", "", "", "", "", "", "", ""];
+    statusDisplay.innerHTML = currentPlayerTurn();
+    document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
+    view_last_Results();
 }
 
 document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', handleCellClick));
 
 document.querySelector('.btn-game-restart').addEventListener('click', handleRestartGame);
 
+/* LOCAL storage */
+const mainResult = document.querySelector('.last-result-list');
 
 function setLocalStorage() {
-   localStorage.setItem("X_score", score.X_player );
-   localStorage.setItem("tie_score", score.ties );
-   localStorage.setItem("O_score", score.O_player );
+    localStorage.setItem('result', JSON.stringify(result));
+    localStorage.setItem("X_score", score.X_player );
+    localStorage.setItem("tie_score", score.ties );
+    localStorage.setItem("O_score", score.O_player );
+
  }
 window.addEventListener("beforeunload", setLocalStorage);
 
 function getLocalStorage() {
     score.X_player = (localStorage.getItem("X_score")) ? localStorage.getItem("X_score") : 0;
-   // score.X_player = 0;
     score.ties = (localStorage.getItem("tie_score")) ? localStorage.getItem("tie_score") : 0;
     score.O_player = (localStorage.getItem("O_score") != 0) ? localStorage.getItem("O_score") : 0;
     document.getElementById("X_score").innerHTML = score.X_player;
     document.getElementById("tie_score").innerHTML = score.ties;
     document.getElementById("O_score").innerHTML = score.O_player;
+    console.log(score.X_player, score.ties, score.O_player, 555);
+
+    if (localStorage.getItem('result')) {
+        result = JSON.parse(localStorage.getItem('result'));
+        view_last_Results();
+    }
 }
-window.addEventListener("load", getLocalStorage);
+window.addEventListener('load', getLocalStorage);
+
+
+const view_last_Results = () => {
+    mainResult.innerHTML = '';
+
+    result.map(el => {
+        const li = document.createElement('li');
+        li.classList.add('last-result-item')
+        if (el.name === 'Tie') {
+            li.textContent = `Tie`;
+            return mainResult.append(li);
+        }
+        li.textContent = `${el.name} won in ${el.shots} steps`;
+        return mainResult.append(li);
+    })
+}
